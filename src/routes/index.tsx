@@ -63,11 +63,11 @@ function App() {
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4">
         {/* Title */}
-        <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
-          <h1 className="text-6xl md:text-8xl font-black text-white tracking-tight mb-4 drop-shadow-2xl">
+        <div className="text-center mb-8 md:mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+          <h1 className="text-4xl sm:text-6xl md:text-8xl font-black text-white tracking-tight mb-2 md:mb-4 drop-shadow-2xl">
             <span className="text-white/90">HYTL.TOOLS</span>
           </h1>
-          <p className="text-lg md:text-xl text-white/70 font-medium tracking-wide">
+          <p className="text-sm sm:text-lg md:text-xl text-white/60 font-medium tracking-wide px-4">
             Check if a Hytale username is taken
           </p>
         </div>
