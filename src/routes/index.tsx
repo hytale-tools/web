@@ -141,11 +141,16 @@ function App() {
             {status === 'taken' && `"${username}" is already taken`}
             {status === 'error' && 'Failed to check username'}
           </p>
+
+          {/* Disclaimer */}
+          <p className="text-center text-xs text-white/30 mt-6">
+            may break at any time, due to hytale rate limits or api changes
+          </p>
         </div>
       </div>
 
       {/* Footer */}
-      <div className="absolute bottom-4 left-0 right-0 z-10 text-center">
+      <div className="absolute bottom-4 left-0 right-0 z-10 text-center flex items-center justify-center gap-2">
         <a
           href="https://x.com/jackgamesftw"
           target="_blank"
@@ -153,6 +158,15 @@ function App() {
           className="text-sm text-white/40 hover:text-white/60 transition-colors"
         >
           made by @jackgamesftw
+        </a>
+        <span className="text-white/30">•</span>
+        <a
+          href="https://github.com/orgs/hytale-tools/repositories"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sm text-white/40 hover:text-white/60 transition-colors"
+        >
+          source code
         </a>
       </div>
     </div>
