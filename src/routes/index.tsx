@@ -61,7 +61,7 @@ function App() {
       <div className="absolute inset-0 bg-linear-to-r from-cyan-500/20 via-transparent to-amber-500/20" />
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 pb-16">
         {/* Title */}
         <div className="text-center mb-8 md:mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
           <h1 className="text-4xl sm:text-6xl md:text-8xl font-black text-white tracking-tight mb-2 md:mb-4 drop-shadow-2xl">
@@ -142,6 +142,18 @@ function App() {
             {status === 'error' && 'Failed to check username'}
           </p>
         </div>
+      </div>
+
+      {/* Footer */}
+      <div className="absolute bottom-4 left-0 right-0 z-10 text-center">
+        <a
+          href="https://x.com/jackgamesftw"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sm text-white/40 hover:text-white/60 transition-colors"
+        >
+          made by @jackgamesftw
+        </a>
       </div>
     </div>
   )
