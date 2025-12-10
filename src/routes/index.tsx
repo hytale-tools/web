@@ -144,7 +144,7 @@ function App() {
 
           {/* Disclaimer */}
           <p className="text-center text-xs text-white/30 mt-6">
-            may break at any time, due to hytale rate limits or api changes
+            may break at any time, due to hytale rate limits or api changes<br/>feel free to self host it from the source code below
           </p>
         </div>
       </div>
