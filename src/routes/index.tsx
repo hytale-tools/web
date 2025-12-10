@@ -6,7 +6,9 @@ import { env } from '@/env'
 
 export const Route = createFileRoute('/')({ component: App })
 
-type CheckStatus = 'idle' | 'loading' | 'available' | 'taken' | 'error'
+type CheckStatus = 'idle' | 'loading' | 'available' | 'taken' | 'error' | 'invalid'
+
+const USERNAME_REGEX = /^[a-zA-Z0-9_]+$/
 
 async function checkUsername(username: string): Promise<boolean> {
   const response = await fetch(`${env.VITE_API_URL}/check/${encodeURIComponent(username)}`)
@@ -21,10 +23,14 @@ function App() {
   const [username, setUsername] = useState('')
   const [status, setStatus] = useState<CheckStatus>('idle')
 
-  // Debounced username check
   useEffect(() => {
     if (!username.trim() || username.length < 3 || username.length > 16) {
       setStatus('idle')
+      return
+    }
+
+    if (!USERNAME_REGEX.test(username)) {
+      setStatus('invalid')
       return
     }
 
@@ -80,7 +86,7 @@ function App() {
               className={`absolute -inset-1 rounded-2xl opacity-50 group-hover:opacity-75 blur-lg transition-all duration-500 group-focus-within:opacity-100 ${
                 status === 'available'
                   ? 'bg-emerald-500'
-                  : status === 'taken' || status === 'error'
+                  : status === 'taken' || status === 'error' || status === 'invalid'
                     ? 'bg-red-500'
                     : 'bg-linear-to-r from-cyan-500 via-amber-500 to-cyan-500'
               }`}
@@ -91,7 +97,7 @@ function App() {
               className={`relative flex items-center bg-black/60 backdrop-blur-xl rounded-xl border overflow-hidden transition-colors duration-300 ${
                 status === 'available'
                   ? 'border-emerald-500/50'
-                  : status === 'taken' || status === 'error'
+                  : status === 'taken' || status === 'error' || status === 'invalid'
                     ? 'border-red-500/50'
                     : 'border-white/10'
               }`}
@@ -121,6 +127,11 @@ function App() {
                     <X className="w-5 h-5 text-red-400" />
                   </div>
                 )}
+                {status === 'invalid' && (
+                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-red-500/20">
+                    <X className="w-5 h-5 text-red-400" />
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -130,7 +141,7 @@ function App() {
             className={`text-center text-sm mt-4 transition-colors duration-300 ${
               status === 'available'
                 ? 'text-emerald-400'
-                : status === 'taken' || status === 'error'
+                : status === 'taken' || status === 'error' || status === 'invalid'
                   ? 'text-red-400'
                   : 'text-white/40'
             }`}
@@ -140,6 +151,7 @@ function App() {
             {status === 'available' && `"${username}" is available!`}
             {status === 'taken' && `"${username}" is already taken`}
             {status === 'error' && 'Failed to check username'}
+            {status === 'invalid' && 'Invalid username - must be 3-16 characters, letters, numbers, and underscores only'}
           </p>
 
           {/* Disclaimer */}
