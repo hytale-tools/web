@@ -73,7 +73,7 @@ function App() {
         console.error('Failed to check username');
         setStatus('error');
       }
-    }, 1);
+    }, 1000);
 
     return () => {
       clearTimeout(timer);
