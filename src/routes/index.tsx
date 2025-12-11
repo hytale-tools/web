@@ -24,12 +24,12 @@ function App() {
   const [status, setStatus] = useState<CheckStatus>('idle')
 
   useEffect(() => {
-    if (!username.trim() || username.length < 3 || username.length > 16) {
+    if (!username.trim() || username.length < 3) {
       setStatus('idle')
       return
     }
 
-    if (!USERNAME_REGEX.test(username)) {
+    if (username.length > 16 || !USERNAME_REGEX.test(username)) {
       setStatus('invalid')
       return
     }
