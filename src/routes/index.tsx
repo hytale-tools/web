@@ -162,24 +162,27 @@ function App() {
       </div>
 
       {/* Footer */}
-      <div className="absolute bottom-4 left-0 right-0 z-10 text-center flex items-center justify-center gap-2">
-        <a
-          href="https://x.com/jackgamesftw"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-sm text-white/40 hover:text-white/60 transition-colors"
-        >
-          made by @jackgamesftw
-        </a>
-        <span className="text-white/30">•</span>
-        <a
-          href="https://github.com/orgs/hytale-tools/repositories"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-sm text-white/40 hover:text-white/60 transition-colors"
-        >
-          source code
-        </a>
+      <div className="absolute bottom-4 left-0 right-0 z-10 text-center flex flex-col items-center gap-1">
+        <p className="text-xs text-white/30">Unofficial tool, not affiliated with Hytale</p>
+        <div className="flex items-center gap-2">
+          <a
+            href="https://x.com/jackgamesftw"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-white/40 hover:text-white/60 transition-colors"
+          >
+            made by @jackgamesftw
+          </a>
+          <span className="text-white/30">•</span>
+          <a
+            href="https://github.com/orgs/hytale-tools/repositories"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-white/40 hover:text-white/60 transition-colors"
+          >
+            source code
+          </a>
+        </div>
       </div>
     </div>
   )
