@@ -1,32 +1,47 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { Check, Loader2, Search, X } from 'lucide-react'
-import { useEffect, useState } from 'react'
-import { Input } from '@/components/ui/input'
-import { env } from '@/env'
+import { createFileRoute } from '@tanstack/react-router';
+import { Check, Loader2, Search, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { env } from '@/env';
 
-export const Route = createFileRoute('/')({ component: App })
+export const Route = createFileRoute('/')({
+  component: App
+});
 
-type CheckStatus = 'idle' | 'loading' | 'available' | 'taken' | 'error' | 'invalid'
+type CheckStatus = 'idle' | 'loading' | 'available' | 'taken' | 'error' | 'invalid' | 'rate_limited';
 
 const USERNAME_REGEX = /^[a-zA-Z0-9_]+$/
 
-async function checkUsername(username: string): Promise<boolean> {
-  const response = await fetch(`${env.VITE_API_URL}/check/${encodeURIComponent(username)}`)
-  if (!response.ok) {
-    throw new Error('Failed to check username')
+type CheckUsernameResponse = 
+  | {
+      username: string;
+      available: boolean;
+      cached: boolean;
+    }
+  | {
+      error: 'hytale_api_error' | 'rate_limited';
+      retryAfter: number;
+    };
+
+async function checkUsername(username: string): Promise<CheckUsernameResponse> {
+  const response = await fetch(`${env.VITE_API_URL}/check/${username.toLowerCase()}`);
+
+  if (![200, 429].includes(response.status)) {
+    throw new Error('Failed to check username');
   }
-  const data: { username: string; available: boolean } = await response.json()
-  return data.available
+
+  return await response.json() as CheckUsernameResponse;
 }
 
 function App() {
-  const [username, setUsername] = useState('')
-  const [status, setStatus] = useState<CheckStatus>('idle')
+  const [username, setUsername] = useState('');
+  const [status, setStatus] = useState<CheckStatus>('idle');
+  const [retryAfter, setRetryAfter] = useState<number | null>(null);
 
   useEffect(() => {
     if (!username.trim() || username.length < 3) {
-      setStatus('idle')
-      return
+      setStatus('idle');
+      return;
     }
 
     if (username.length > 16 || !USERNAME_REGEX.test(username)) {
@@ -34,24 +49,54 @@ function App() {
       return
     }
 
-    setStatus('loading')
+    setStatus('loading');
 
-    const controller = new AbortController()
+    const controller = new AbortController();
 
     const timer = setTimeout(async () => {
       try {
-        const isAvailable = await checkUsername(username)
-        setStatus(isAvailable ? 'available' : 'taken')
+        const response = await checkUsername(username);
+        if ('error' in response) {
+          console.log(response);
+          if (response.error === 'rate_limited') {
+            setStatus('rate_limited');
+            setRetryAfter(response.retryAfter);
+          } else {
+            setStatus('error');
+            setRetryAfter(null);
+          }
+          return;
+        }
+
+        setStatus(response.available ? 'available' : 'taken');
       } catch {
-        setStatus('error')
+        console.error('Failed to check username');
+        setStatus('error');
       }
-    }, 1000)
+    }, 1000);
 
     return () => {
-      clearTimeout(timer)
-      controller.abort()
+      clearTimeout(timer);
+      controller.abort();
     }
   }, [username])
+
+  // Countdown timer for retry after
+  useEffect(() => {
+    if (retryAfter === null || retryAfter <= 0) return;
+
+    const interval = setInterval(() => {
+      setRetryAfter(prev => {
+        if (prev === null || prev <= 1) {
+          setStatus('idle');
+          return null;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [retryAfter])
 
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -86,7 +131,7 @@ function App() {
               className={`absolute -inset-1 rounded-2xl opacity-50 group-hover:opacity-75 blur-lg transition-all duration-500 group-focus-within:opacity-100 ${
                 status === 'available'
                   ? 'bg-emerald-500'
-                  : status === 'taken' || status === 'error' || status === 'invalid'
+                  : status === 'taken' || status === 'error' || status === 'invalid' || status === 'rate_limited'
                     ? 'bg-red-500'
                     : 'bg-linear-to-r from-cyan-500 via-amber-500 to-cyan-500'
               }`}
@@ -97,7 +142,7 @@ function App() {
               className={`relative flex items-center bg-black/60 backdrop-blur-xl rounded-xl border overflow-hidden transition-colors duration-300 ${
                 status === 'available'
                   ? 'border-emerald-500/50'
-                  : status === 'taken' || status === 'error' || status === 'invalid'
+                  : status === 'taken' || status === 'error' || status === 'invalid' || status === 'rate_limited'
                     ? 'border-red-500/50'
                     : 'border-white/10'
               }`}
@@ -122,16 +167,11 @@ function App() {
                     <Check className="w-5 h-5 text-emerald-400" />
                   </div>
                 )}
-                {status === 'taken' && (
+                {['taken', 'invalid', 'rate_limited'].includes(status) ? (
                   <div className="flex items-center justify-center w-8 h-8 rounded-full bg-red-500/20">
                     <X className="w-5 h-5 text-red-400" />
                   </div>
-                )}
-                {status === 'invalid' && (
-                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-red-500/20">
-                    <X className="w-5 h-5 text-red-400" />
-                  </div>
-                )}
+                ) : null}
               </div>
             </div>
           </div>
@@ -141,7 +181,7 @@ function App() {
             className={`text-center text-sm mt-4 transition-colors duration-300 ${
               status === 'available'
                 ? 'text-emerald-400'
-                : status === 'taken' || status === 'error' || status === 'invalid'
+                : status === 'taken' || status === 'error' || status === 'invalid' || status === 'rate_limited'
                   ? 'text-red-400'
                   : 'text-white/40'
             }`}
@@ -150,8 +190,9 @@ function App() {
             {status === 'loading' && 'Checking availability...'}
             {status === 'available' && `"${username}" is available!`}
             {status === 'taken' && `"${username}" is already taken`}
-            {status === 'error' && 'Failed to check username'}
+            {status === 'error' && 'Failed to check username - please try again'}
             {status === 'invalid' && 'Invalid username - must be 3-16 characters, letters, numbers, and underscores only'}
+            {status === 'rate_limited' && retryAfter !== null && `Rate limit exceeded - try again in ${retryAfter} second${retryAfter !== 1 ? 's' : ''}`}
           </p>
 
           {/* Disclaimer */}
