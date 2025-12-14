@@ -19,6 +19,54 @@ export const Route = createRootRoute({
       {
         title: 'HytlTools',
       },
+      {
+        name: 'description',
+        content: 'Check Hytale username availability instantly. Free tool to see if your desired username is taken or available.',
+      },
+      { 
+        name: "keywords", 
+        content: "hytale username checker, hytale username availability, check hytale username, hytale name checker, hytale username search" 
+      },
+      { 
+        name: "author", 
+        content: "hytl.tools" 
+      },
+      { 
+        name: "robots", 
+        content: "index, follow" 
+      },
+      { 
+        property: "og:type", 
+        content: "website" 
+      },
+      { 
+        property: "og:url", 
+        content: "https://hytl.tools/" 
+      },
+      { 
+        property: "og:title", 
+        content: "Hytale Username Checker | hytl.tools" 
+      },
+      { 
+        property: "og:description", 
+        content: "Check Hytale username availability instantly. Free tool to see if your desired username is taken or available." 
+      },
+      { 
+        property: "twitter:card", 
+        content: "summary" 
+      },
+      { 
+        property: "twitter:url", 
+        content: "https://hytl.tools/" 
+      },
+      { 
+        property: "twitter:title", 
+        content: "Hytale Username Checker | hytl.tools" 
+      },
+      { 
+        property: "twitter:description", 
+        content: "Check Hytale username availability instantly. Free tool to see if your desired username is taken or available." 
+      },
     ],
     links: [
       {
