@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { Check, Loader2, Search, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Input } from '@/components/ui/input';
@@ -223,6 +223,13 @@ function App() {
           >
             source code
           </a>
+          <span className="text-white/30">•</span>
+          <Link
+            to="/terms"
+            className="text-sm text-white/40 hover:text-white/60 transition-colors"
+          >
+            terms of service
+          </Link>
         </div>
       </div>
     </div>
