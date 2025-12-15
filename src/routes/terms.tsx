@@ -36,7 +36,7 @@ function TermsOfService() {
               Terms of Service
             </h1>
             <p className="text-lg text-white/60">
-              Last updated: December 14, 2025
+              Last updated: December 15, 2025
             </p>
           </div>
 
@@ -93,7 +93,7 @@ function TermsOfService() {
               <section className="mb-8">
                 <h2 className="text-2xl font-bold text-white mb-4">Rate Limits</h2>
                 <p className="text-white/80 leading-relaxed">
-                  The API is rate-limited to ensure fair access for all users. Excessive use may result in temporary or permanent IP blocking.
+                  The API is rate-limited to ensure fair access for all users. Excessive spam requests may result in temporary or permanent IP blocking. Rate limits only occur if the username you requested isn't cached.
                 </p>
               </section>
 
@@ -132,7 +132,7 @@ function TermsOfService() {
               <section className="mb-8">
                 <h2 className="text-2xl font-bold text-white mb-4">Contact</h2>
                 <p className="text-white/80 leading-relaxed">
-                  For questions or permissions:<br/>
+                  For questions:<br/>
                   <strong>Email:</strong> hytl-tools@jackgamesftw.xyz<br/>
                   <strong>Website:</strong> <a href="https://hytl.tools" className="text-cyan-400 hover:text-cyan-300 underline">https://hytl.tools</a>
                 </p>
