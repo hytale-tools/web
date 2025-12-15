@@ -60,23 +60,19 @@ function TermsOfService() {
                 <div className="space-y-3 mb-6">
                   <p className="text-white/80 leading-relaxed flex items-start gap-2">
                     <span className="text-green-400 text-lg">✅</span>
-                    <span><strong>Embedding with clear attribution to hytl.tools</strong><br/>
-                    You may embed functionality with visible attribution linking back to hytl.tools.</span>
-                  </p>
-                  <p className="text-white/80 leading-relaxed flex items-start gap-2">
-                    <span className="text-green-400 text-lg">✅</span>
-                    <span><strong>Open source projects (non-commercial)</strong><br/>
-                    You may use the API in open source projects that are non-commercial and properly attributed.</span>
+                    <span><strong>Personal use with attribution</strong><br/>
+                    You may use the API with proper attribution to hytl.tools.</span>
                   </p>
                   <p className="text-white/80 leading-relaxed flex items-start gap-2">
                     <span className="text-green-400 text-lg">✅</span>
                     <span><strong>Creating alternative frontends</strong><br/>
-                    You may create your own interface/frontend, provided it remains free and properly attributes hytl.tools.</span>
+                    You may create your own interface/frontend with proper attribution
+                    to hytl.tools.</span>
                   </p>
                   <p className="text-white/80 leading-relaxed flex items-start gap-2">
                     <span className="text-green-400 text-lg">✅</span>
                     <span><strong>Self-hosting</strong><br/>
-                    You may self-host your own instance of this service (if source code is available) without restriction.</span>
+                    You may self-host your own instance using the provided <a href="https://github.com/orgs/hytale-tools/repositories" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">source code</a> without restriction.</span>
                   </p>
                 </div>
 
@@ -84,8 +80,8 @@ function TermsOfService() {
                 <div className="space-y-3">
                   <p className="text-white/80 leading-relaxed flex items-start gap-2">
                     <span className="text-red-400 text-lg">❌</span>
-                    <span><strong>Soliciting donations/payments for access to this API</strong><br/>
-                    You may not monetize, accept donations, or charge fees for any service that uses this API.</span>
+                    <span><strong>Monetization without self-hosting</strong><br/>
+                    You may not accept donations, display ads, or charge fees for any service using the hytl.tools API endpoint. If you wish to monetize your project, you must self-host your own instance.</span>
                   </p>
                 </div>
               </section>
@@ -132,9 +128,7 @@ function TermsOfService() {
               <section className="mb-8">
                 <h2 className="text-2xl font-bold text-white mb-4">Contact</h2>
                 <p className="text-white/80 leading-relaxed">
-                  For questions:<br/>
-                  <strong>Email:</strong> hytl-tools@jackgamesftw.xyz<br/>
-                  <strong>Website:</strong> <a href="https://hytl.tools" className="text-cyan-400 hover:text-cyan-300 underline">https://hytl.tools</a>
+                  Email: <a href="mailto:hytl-tools@jackgamesftw.xyz" className="text-cyan-400 hover:text-cyan-300 underline">hytl-tools@jackgamesftw.xyz</a>
                 </p>
               </section>
 
