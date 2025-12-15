@@ -26,7 +26,16 @@ type CheckUsernameResponse =
 async function checkUsername(username: string): Promise<CheckUsernameResponse> {
   const response = await fetch(`${env.VITE_API_URL}/check/${username.toLowerCase()}`);
 
-  if (![200, 429].includes(response.status)) {
+  if (response.status === 429) {
+    const retryAfter = response.headers.get('Retry-After') ?? '0';
+
+    return {
+      error: 'rate_limited',
+      retryAfter: parseInt(retryAfter, 10),
+    };
+  }
+
+  if (response.status !== 200) {
     throw new Error('Failed to check username');
   }
 
@@ -57,7 +66,6 @@ function App() {
       try {
         const response = await checkUsername(username);
         if ('error' in response) {
-          console.log(response);
           if (response.error === 'rate_limited') {
             setStatus('rate_limited');
             setRetryAfter(response.retryAfter);
