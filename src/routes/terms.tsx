@@ -93,7 +93,7 @@ function TermsOfService() {
               <section className="mb-8">
                 <h2 className="text-2xl font-bold text-white mb-4">Rate Limits</h2>
                 <p className="text-white/80 leading-relaxed">
-                  The API is rate-limited to ensure fair access for all users. Excessive spam requests may result in temporary or permanent IP blocking. Rate limits only occur if the username you requested isn't cached.
+                  The API is rate-limited to ensure fair access for all users. Excessive requests may result in temporary or permanent IP blocking. Rate limits only occur if the username you requested isn't cached.
                 </p>
               </section>
 
