@@ -36,7 +36,7 @@ function TermsOfService() {
               Terms of Service
             </h1>
             <p className="text-lg text-white/60">
-              Last updated: December 15, 2025
+              Last updated: December 17, 2025
             </p>
           </div>
 
@@ -60,14 +60,13 @@ function TermsOfService() {
                 <div className="space-y-3 mb-6">
                   <p className="text-white/80 leading-relaxed flex items-start gap-2">
                     <span className="text-green-400 text-lg">✅</span>
-                    <span><strong>Personal use with attribution</strong><br/>
-                    You may use the API with proper attribution to hytl.tools.</span>
+                    <span><strong>Personal use</strong><br/>
+                    You may use the API. Attribution to hytl.tools is required unless specifically permitted otherwise.</span>
                   </p>
                   <p className="text-white/80 leading-relaxed flex items-start gap-2">
                     <span className="text-green-400 text-lg">✅</span>
                     <span><strong>Creating alternative frontends</strong><br/>
-                    You may create your own interface/frontend with proper attribution
-                    to hytl.tools.</span>
+                    You may create your own interface/frontend. Attribution to hytl.tools is required unless specifically permitted otherwise.</span>
                   </p>
                   <p className="text-white/80 leading-relaxed flex items-start gap-2">
                     <span className="text-green-400 text-lg">✅</span>
