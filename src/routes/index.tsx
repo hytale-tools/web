@@ -23,23 +23,37 @@ type CheckUsernameResponse =
       retryAfter: number;
     };
 
-async function checkUsername(username: string): Promise<CheckUsernameResponse> {
-  const response = await fetch(`${env.VITE_API_URL}/check/${username.toLowerCase()}`);
+async function checkUsername(username: string, maxRetries = 3): Promise<CheckUsernameResponse> {
+  let lastError: Error | null = null;
 
-  if (response.status === 429) {
-    const retryAfter = response.headers.get('Retry-After') ?? '0';
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const response = await fetch(`${env.VITE_API_URL}/check/${username.toLowerCase()}`);
 
-    return {
-      error: 'rate_limited',
-      retryAfter: parseInt(retryAfter, 10),
-    };
+      if (response.status === 429) {
+        const retryAfter = response.headers.get('Retry-After') ?? '0';
+
+        return {
+          error: 'rate_limited',
+          retryAfter: parseInt(retryAfter, 10),
+        };
+      }
+
+      if (response.status !== 200) {
+        throw new Error('Failed to check username');
+      }
+
+      return await response.json() as CheckUsernameResponse;
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error('Unknown error');
+      
+      if (attempt < maxRetries) {
+        await new Promise(resolve => setTimeout(resolve, 500 * 2 ** (attempt - 1)));
+      }
+    }
   }
 
-  if (response.status !== 200) {
-    throw new Error('Failed to check username');
-  }
-
-  return await response.json() as CheckUsernameResponse;
+  throw lastError ?? new Error('Failed to check username after retries');
 }
 
 function App() {
