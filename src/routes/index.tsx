@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Check, Loader2, Search, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import Advertisement from '@/components/Advertisement';
 import { Input } from '@/components/ui/input';
 import { env } from '@/env';
 
@@ -216,11 +217,6 @@ function App() {
             {status === 'invalid' && 'Invalid username - must be 3-16 characters, letters, numbers, and underscores only'}
             {status === 'rate_limited' && retryAfter !== null && `Rate limit exceeded - try again in ${retryAfter} second${retryAfter !== 1 ? 's' : ''}`}
           </p>
-
-          {/* Disclaimer */}
-          <p className="text-center text-xs text-white/30 mt-6">
-            may break at any time, due to hytale rate limits or api changes<br/>feel free to self host it from the source code below
-          </p>
         </div>
       </div>
 
@@ -254,6 +250,8 @@ function App() {
           </Link>
         </div>
       </div>
+
+      <Advertisement />
     </div>
   )
 }
