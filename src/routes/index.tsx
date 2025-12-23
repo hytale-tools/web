@@ -162,9 +162,11 @@ function App() {
               className={`absolute -inset-1 rounded-2xl opacity-50 group-hover:opacity-75 blur-lg transition-all duration-500 group-focus-within:opacity-100 ${
                 status === 'available'
                   ? 'bg-emerald-500'
-                  : ['taken', 'error', 'invalid', 'rate_limited', 'hytale_api_error', 'prohibited_word', 'reserved_by_hytale', 'reserved', 'hytale_rate_limit'].includes(status)
-                    ? 'bg-red-500'
-                    : 'bg-linear-to-r from-cyan-500 via-amber-500 to-cyan-500'
+                  : ['reserved', 'reserved_by_hytale'].includes(status)
+                    ? 'bg-linear-to-r from-yellow-500 to-orange-400'
+                    : ['taken', 'error', 'invalid', 'rate_limited', 'hytale_api_error', 'prohibited_word', 'hytale_rate_limit'].includes(status)
+                      ? 'bg-red-500'
+                      : 'bg-linear-to-r from-cyan-500 via-amber-500 to-cyan-500'
               }`}
             />
 
@@ -173,9 +175,11 @@ function App() {
               className={`relative flex items-center bg-black/60 backdrop-blur-xl rounded-xl border overflow-hidden transition-colors duration-300 ${
                 status === 'available'
                   ? 'border-emerald-500/50'
-                  : ['taken', 'error', 'invalid', 'rate_limited', 'hytale_api_error', 'prohibited_word', 'reserved_by_hytale', 'reserved', 'hytale_rate_limit'].includes(status)
-                    ? 'border-red-500/50'
-                    : 'border-white/10'
+                  : ['reserved', 'reserved_by_hytale'].includes(status)
+                    ? 'border-orange-500/50'
+                    : ['taken', 'error', 'invalid', 'rate_limited', 'hytale_api_error', 'prohibited_word', 'hytale_rate_limit'].includes(status)
+                      ? 'border-red-500/50'
+                      : 'border-white/10'
               }`}
             >
               <Search className="absolute left-6 w-6 h-6 text-white/50" />
@@ -198,7 +202,12 @@ function App() {
                     <Check className="w-5 h-5 text-emerald-400" />
                   </div>
                 )}
-                {['taken', 'invalid', 'rate_limited', 'hytale_api_error', 'prohibited_word', 'reserved_by_hytale', 'reserved', 'hytale_rate_limit'].includes(status) ? (
+                {['reserved', 'reserved_by_hytale'].includes(status) ? (
+                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-orange-500/20">
+                    <X className="w-5 h-5 text-orange-400" />
+                  </div>
+                ) : null}
+                {['taken', 'invalid', 'rate_limited', 'hytale_api_error', 'prohibited_word', 'hytale_rate_limit'].includes(status) ? (
                   <div className="flex items-center justify-center w-8 h-8 rounded-full bg-red-500/20">
                     <X className="w-5 h-5 text-red-400" />
                   </div>
@@ -212,9 +221,11 @@ function App() {
             className={`text-center text-sm mt-4 transition-colors duration-300 ${
               status === 'available'
                 ? 'text-emerald-400'
-                : ['taken', 'error', 'invalid', 'rate_limited', 'hytale_api_error', 'prohibited_word', 'reserved_by_hytale', 'reserved', 'hytale_rate_limit'].includes(status)
-                  ? 'text-red-400'
-                  : 'text-white/40'
+                : ['reserved', 'reserved_by_hytale'].includes(status)
+                  ? 'text-orange-400'
+                  : ['taken', 'error', 'invalid', 'rate_limited', 'hytale_api_error', 'prohibited_word', 'hytale_rate_limit'].includes(status)
+                    ? 'text-red-400'
+                    : 'text-white/40'
             }`}
           >
             {status === 'idle' && 'Start typing to check availability'}
