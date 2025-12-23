@@ -9,7 +9,19 @@ export const Route = createFileRoute('/')({
   component: App
 });
 
-type CheckStatus = 'idle' | 'loading' | 'available' | 'taken' | 'error' | 'invalid' | 'rate_limited';
+type CheckStatus = 
+  | 'idle' 
+  | 'loading' 
+  | 'available' 
+  | 'taken' 
+  | 'error' 
+  | 'invalid' 
+  | 'rate_limited'
+  | 'hytale_api_error'
+  | 'prohibited_word'
+  | 'reserved_by_hytale'
+  | 'reserved'
+  | 'hytale_rate_limit';
 
 const USERNAME_REGEX = /^[a-zA-Z0-9_]+$/
 
@@ -18,9 +30,10 @@ type CheckUsernameResponse =
       username: string;
       available: boolean;
       cached: boolean;
+      status: 'available';
     }
   | {
-      error: 'hytale_api_error' | 'rate_limited';
+      error: 'hytale_api_error' | 'prohibited_word' | 'reserved_by_hytale' | 'taken' | 'reserved' | 'hytale_rate_limit' | 'rate_limited';
       retryAfter: number;
     };
 
@@ -40,7 +53,7 @@ async function checkUsername(username: string, maxRetries = 3): Promise<CheckUse
         };
       }
 
-      if (response.status !== 200) {
+      if (![200, 400].includes(response.status)) {
         throw new Error('Failed to check username');
       }
 
@@ -81,17 +94,12 @@ function App() {
       try {
         const response = await checkUsername(username);
         if ('error' in response) {
-          if (response.error === 'rate_limited') {
-            setStatus('rate_limited');
-            setRetryAfter(response.retryAfter);
-          } else {
-            setStatus('error');
-            setRetryAfter(null);
-          }
+          setStatus(response.error);
+          setRetryAfter(response.retryAfter);
           return;
         }
 
-        setStatus(response.available ? 'available' : 'taken');
+        setStatus(response.status);
       } catch {
         console.error('Failed to check username');
         setStatus('error');
@@ -154,7 +162,7 @@ function App() {
               className={`absolute -inset-1 rounded-2xl opacity-50 group-hover:opacity-75 blur-lg transition-all duration-500 group-focus-within:opacity-100 ${
                 status === 'available'
                   ? 'bg-emerald-500'
-                  : status === 'taken' || status === 'error' || status === 'invalid' || status === 'rate_limited'
+                  : ['taken', 'error', 'invalid', 'rate_limited', 'hytale_api_error', 'prohibited_word', 'reserved_by_hytale', 'reserved', 'hytale_rate_limit'].includes(status)
                     ? 'bg-red-500'
                     : 'bg-linear-to-r from-cyan-500 via-amber-500 to-cyan-500'
               }`}
@@ -165,7 +173,7 @@ function App() {
               className={`relative flex items-center bg-black/60 backdrop-blur-xl rounded-xl border overflow-hidden transition-colors duration-300 ${
                 status === 'available'
                   ? 'border-emerald-500/50'
-                  : status === 'taken' || status === 'error' || status === 'invalid' || status === 'rate_limited'
+                  : ['taken', 'error', 'invalid', 'rate_limited', 'hytale_api_error', 'prohibited_word', 'reserved_by_hytale', 'reserved', 'hytale_rate_limit'].includes(status)
                     ? 'border-red-500/50'
                     : 'border-white/10'
               }`}
@@ -190,7 +198,7 @@ function App() {
                     <Check className="w-5 h-5 text-emerald-400" />
                   </div>
                 )}
-                {['taken', 'invalid', 'rate_limited'].includes(status) ? (
+                {['taken', 'invalid', 'rate_limited', 'hytale_api_error', 'prohibited_word', 'reserved_by_hytale', 'reserved', 'hytale_rate_limit'].includes(status) ? (
                   <div className="flex items-center justify-center w-8 h-8 rounded-full bg-red-500/20">
                     <X className="w-5 h-5 text-red-400" />
                   </div>
@@ -204,7 +212,7 @@ function App() {
             className={`text-center text-sm mt-4 transition-colors duration-300 ${
               status === 'available'
                 ? 'text-emerald-400'
-                : status === 'taken' || status === 'error' || status === 'invalid' || status === 'rate_limited'
+                : ['taken', 'error', 'invalid', 'rate_limited', 'hytale_api_error', 'prohibited_word', 'reserved_by_hytale', 'reserved', 'hytale_rate_limit'].includes(status)
                   ? 'text-red-400'
                   : 'text-white/40'
             }`}
@@ -216,6 +224,11 @@ function App() {
             {status === 'error' && 'Failed to check username - please try again'}
             {status === 'invalid' && 'Invalid username - must be 3-16 characters, letters, numbers, and underscores only'}
             {status === 'rate_limited' && retryAfter !== null && `Rate limit exceeded - try again in ${retryAfter} second${retryAfter !== 1 ? 's' : ''}`}
+            {status === 'hytale_api_error' && 'Hytale API is currently unavailable - please try again'}
+            {status === 'prohibited_word' && `"${username}" contains a prohibited word`}
+            {status === 'reserved_by_hytale' && `"${username}" is reserved by Hytale`}
+            {status === 'reserved' && `"${username}" is reserved`}
+            {status === 'hytale_rate_limit' && 'Hytale API rate limit exceeded - please try again'}
           </p>
         </div>
       </div>
