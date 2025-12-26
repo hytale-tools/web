@@ -25,7 +25,7 @@ export const Route = createRootRoute({
       },
       { 
         name: "keywords", 
-        content: "hytale username checker, hytale username availability, check hytale username, hytale name checker, hytale username search" 
+        content: "hytale username checker, check hytale name availability, hytale username search, hytale name lookup tool, is my hytale username taken, hytale username finder, hytale account name checker, hytale username availability 2026, reserve hytale username, hytale og names available, hytale username lookup, hytale name availability tool, hytale name checker free, check if hytale username is taken, hytale username availability API, how to check hytale usernames, hytale 3 letter usernames available, check hytale username before release, hytale OG name checker, rare hytale usernames list, best hytale username tools, hytale username checker like namemc, hytale username search alternative, hytale.com username lookup",
       },
       { 
         name: "author", 
