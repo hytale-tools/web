@@ -6,7 +6,7 @@ export default function Advertisement() {
       <Tooltip>
         <TooltipTrigger>
           <a 
-            href="https://discord.gg/hylandia"
+            href="https://discord.gg/Psx9uKDnWR"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-black/25 px-3.5 py-2.5 rounded-md cursor-pointer hover:bg-black/35 transition-all duration-300 inline-block"
