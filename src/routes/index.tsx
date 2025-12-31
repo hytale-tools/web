@@ -217,30 +217,38 @@ function App() {
           </div>
 
           {/* Status text */}
-          <p
-            className={`text-center text-sm mt-4 transition-colors duration-300 ${
-              status === 'available'
-                ? 'text-emerald-400'
-                : ['reserved', 'reserved_by_hytale'].includes(status)
-                  ? 'text-orange-400'
-                  : ['taken', 'error', 'invalid', 'rate_limited', 'hytale_api_error', 'prohibited_word', 'hytale_rate_limit'].includes(status)
-                    ? 'text-red-400'
-                    : 'text-white/40'
-            }`}
-          >
-            {status === 'idle' && 'Start typing to check availability'}
-            {status === 'loading' && 'Checking availability...'}
-            {status === 'available' && `"${username}" is available!`}
-            {status === 'taken' && `"${username}" is already taken`}
-            {status === 'error' && 'Failed to check username - please try again'}
-            {status === 'invalid' && 'Invalid username - must be 3-16 characters, letters, numbers, and underscores only'}
-            {status === 'rate_limited' && retryAfter !== null && `Rate limit exceeded - try again in ${retryAfter} second${retryAfter !== 1 ? 's' : ''}`}
-            {status === 'hytale_api_error' && 'Hytale API is currently unavailable - please try again'}
-            {status === 'prohibited_word' && `"${username}" contains a prohibited word`}
-            {status === 'reserved_by_hytale' && `"${username}" is reserved by Hytale`}
-            {status === 'reserved' && `"${username}" is reserved`}
-            {status === 'hytale_rate_limit' && 'Hytale API rate limit exceeded - please try again'}
-          </p>
+          <div className="flex items-center justify-between mt-2 gap-2">
+            <div className="w-10" />
+
+            <p
+              className={`text-center text-sm transition-colors duration-300 ${
+                status === 'available'
+                  ? 'text-emerald-400'
+                  : ['reserved', 'reserved_by_hytale'].includes(status)
+                    ? 'text-orange-400'
+                    : ['taken', 'error', 'invalid', 'rate_limited', 'hytale_api_error', 'prohibited_word', 'hytale_rate_limit'].includes(status)
+                      ? 'text-red-400'
+                      : 'text-white/40'
+              }`}
+            >
+              {status === 'idle' && 'Start typing to check availability'}
+              {status === 'loading' && 'Checking availability...'}
+              {status === 'available' && `"${username}" is available!`}
+              {status === 'taken' && `"${username}" is already taken`}
+              {status === 'error' && 'Failed to check username - please try again'}
+              {status === 'invalid' && 'Invalid username - must be 3-16 characters, letters, numbers, and underscores only'}
+              {status === 'rate_limited' && retryAfter !== null && `Rate limit exceeded - try again in ${retryAfter} second${retryAfter !== 1 ? 's' : ''}`}
+              {status === 'hytale_api_error' && 'Hytale API is currently unavailable - please try again'}
+              {status === 'prohibited_word' && `"${username}" contains a prohibited word`}
+              {status === 'reserved_by_hytale' && `"${username}" is reserved by Hytale`}
+              {status === 'reserved' && `"${username}" is reserved`}
+              {status === 'hytale_rate_limit' && 'Hytale API rate limit exceeded - please try again'}
+            </p>
+
+            <a href="https://discord.gg/H7QEQtsx7W" target="_blank" rel="noopener noreferrer" className="bg-black/25 border border-white/10 p-2 rounded-xl shrink-0 z-20 hover:bg-black/50 cursor-pointer transition-colors duration-300">
+              <img src="/discord-logo.svg" alt="Discord Logo" className="w-6 h-6" />
+            </a>
+          </div>
         </div>
       </div>
 
