@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Check, Loader2, Search, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import Advertisement from '@/components/Advertisement';
 import { Input } from '@/components/ui/input';
 import { env } from '@/env';
 
@@ -282,8 +281,6 @@ function App() {
           </Link>
         </div>
       </div>
-
-      <Advertisement />
     </div>
   )
 }
